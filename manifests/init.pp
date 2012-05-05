@@ -60,7 +60,9 @@ class postfix {
   $mailx_package = $::lsbdistcodename ? {
     'squeeze' => 'bsd-mailx',
     'lucid'   => 'bsd-mailx',
-    default   => 'mailx',
+    default   => $::operatingsystem ? {
+      ubuntu    => 'bsd-mailx',
+      default   =>'mailx',
   }
 
   $master_os_template = $::operatingsystem ? {
