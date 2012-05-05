@@ -63,6 +63,7 @@ class postfix {
     default   => $::operatingsystem ? {
       ubuntu    => 'bsd-mailx',
       default   =>'mailx',
+    }
   }
 
   $master_os_template = $::operatingsystem ? {
