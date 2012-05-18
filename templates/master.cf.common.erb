@@ -21,9 +21,9 @@ amavis unix - - - - 2 smtp
 dovecot   unix  -       n       n       -       -       pipe
   flags=DRhu user=<%= postfix_mail_user %>:<%= postfix_mail_user %> argv=/usr/lib/dovecot/deliver -d ${recipient}
 <% end -%>
-<% if has_variable?("postfix_use_schleuder") and postfix_use_schleuder == 'yes' %>
-schleuder  unix  -       n       n       -       -       pipe
-  flags=DRhu user=schleuder argv=/usr/bin/schleuder ${user}
+<% if has_variable?("postfix_use_scheduler") and postfix_use_scheduler == 'yes' %>
+scheduler  unix  -       n       n       -       -       pipe
+  flags=DRhu user=scheduler argv=/usr/bin/scheduler ${user}
 <% end -%>
 <% if has_variable?("postfix_use_sympa") and postfix_use_sympa == 'yes' %>
 sympa        unix  -       n       n       -       -       pipe

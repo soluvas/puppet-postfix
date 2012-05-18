@@ -47,8 +47,8 @@ class postfix {
   if $postfix_use_dovecot_lda == '' {
     $postfix_use_dovecot_lda = 'no'
   }
-  if $postfix_use_schleuder == '' {
-    $postfix_use_schleuder = 'no'
+  if $postfix_use_scheduler == '' {
+    $postfix_use_scheduler = 'no'
   }
   if $postfix_use_sympa == '' {
     $postfix_use_sympa = 'no'
