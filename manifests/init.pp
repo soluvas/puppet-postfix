@@ -57,14 +57,7 @@ class postfix {
     $postfix_mail_user = 'vmail'
   }
 
-  $mailx_package = $::lsbdistcodename ? {
-    'squeeze' => 'bsd-mailx',
-    'lucid'   => 'bsd-mailx',
-    default   => $::operatingsystem ? {
-      ubuntu    => 'bsd-mailx',
-      default   =>'mailx',
-    }
-  }
+  $mailx_package = 'bsd-mailx'
 
   $master_os_template = $::operatingsystem ? {
     /RedHat|CentOS/          => template('postfix/master.cf.redhat.erb', 'postfix/master.cf.common.erb'),
