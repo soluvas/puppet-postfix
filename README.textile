@@ -1,0 +1,22 @@
+h1. Postfix Puppet module
+
+This module will help install and configure postfix.
+
+A couple of classes will preconfigure postfix for common needs.
+
+h2. Example
+
+bc.. 
+  include postfix
+
+  postfix::config { "relay_domains": value  => "localhost host.foo.com" }
+
+h2. Virtual Domains support with Dovecot transport
+
+bc.. 
+  # Postfix with Dovecot Virtual Domains support
+  include postfix
+  postfix::config {
+    virtual_mailbox_domains: value => 'member.berbatik.com, shop.berbatik.com';
+    virtual_transport:       value => 'dovecot';
+  }
