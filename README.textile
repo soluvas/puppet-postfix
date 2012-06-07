@@ -14,9 +14,48 @@ bc..
 h2. Virtual Domains support with Dovecot transport
 
 bc.. 
+  # Virtual Domains Linux user & group
+  group { vmail: }
+  user { vmail:
+    gid        => 'vmail',
+    home       => '/var/vmail',
+    managehome => true,
+  }
+
   # Postfix with Dovecot Virtual Domains support
-  include postfix
+  class { postfix:
+    dovecot_enabled => true,
+    dovecot_user    => 'vmail',
+    dovecot_group   => 'vmail',
+    require         => User['vmail'],
+  }
   postfix::config {
     virtual_mailbox_domains: value => 'member.berbatik.com, shop.berbatik.com';
     virtual_transport:       value => 'dovecot';
   }
+
+  # Dovecot
+  class { dovecot:
+    auth_includes    => ['system', 'ldap'],
+    auth_userdb_user => 'vmail',
+    require          => User['vmail'],
+  }
+  include dovecot::postfix
+  class { dovecot::ldap:
+    hosts          => 'localhost:10389',
+    dn             => 'uid=admin,ou=system',
+    dnpass         => 'secret',
+    tls            => 'no',
+    auth_bind      => 'no',
+    ldap_version   => 3,
+    base           => 'dc=berbatik,dc=com',
+    ldap_scope     => 'subtree',
+    user_attrs     => '=home=/var/mail/%d/%n,=uid=vmail,=gid=vmail',
+    user_filter    => '(virtualMail=%u)',
+    pass_attrs     => 'virtualMail=user,userPassword=password',
+    pass_filter    => '(virtualMail=%u)',
+    iterate_attrs  => 'virtualMail=user',
+    iterate_filter => '(virtualMail=*)', 
+  }
+
+p. Dovecot module is at https://github.com/soluvas/puppet-dovecot

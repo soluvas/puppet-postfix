@@ -31,3 +31,9 @@ sympa        unix  -       n       n       -       -       pipe
 sympabounce  unix  -       n       n       -       -       pipe
   flags=R user=sympa argv=/usr/lib/sympa/bin/bouncequeue ${user}
 <% end -%>
+
+<% if dovecot_enabled -%>
+# Dovecot virtual users
+dovecot   unix  -       n       n       -       -       pipe
+  flags=DRhu user=<%= dovecot_user %>:<%= dovecot_group %> argv=/usr/lib/dovecot/deliver -f ${sender} -d ${recipient}
+<% end -%>
