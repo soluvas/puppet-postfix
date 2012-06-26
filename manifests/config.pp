@@ -27,7 +27,7 @@
 #  }
 #
 #
-define postfix::config ($value, $ensure = present) {
+define postfix::config ($value = undef, $ensure = present) {
 
   Augeas {
     context => '/files/etc/postfix/main.cf',
@@ -38,7 +38,7 @@ define postfix::config ($value, $ensure = present) {
   case $ensure {
     present: {
       augeas { "set postfix '${name}' to '${value}'":
-        changes => "set $name $value",
+        changes => "set $name \"$value\"",
       }
     }
     absent: {
