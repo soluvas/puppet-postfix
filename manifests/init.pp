@@ -16,7 +16,11 @@
 #     include postfix
 #   }
 #
-class postfix {
+class postfix(
+  $dovecot_enabled = false,
+  $dovecot_user    = '',
+  $dovecot_group   = ''
+) {
 
   # selinux labels differ from one distribution to another
   case $::operatingsystem {
