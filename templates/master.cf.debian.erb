@@ -86,9 +86,3 @@ scalemail-backend unix	-	n	n	-	2	pipe
 mailman   unix  -       n       n       -       -       pipe
   flags=FR user=list argv=/usr/lib/mailman/bin/postfix-to-mailman.py
   ${nexthop} ${user}
-
-<% if dovecot_enabled -%>
-# Dovecot virtual users
-dovecot   unix  -       n       n       -       -       pipe
-  flags=DRhu user=<%= dovecot_user %>:<%= dovecot_group %> argv=/usr/lib/dovecot/deliver -f ${sender} -d ${recipient}
-<% end -%>
